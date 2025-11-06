@@ -1,0 +1,24 @@
+Project Overview:
+For my project, I want to simulate a game store that sells 
+multiple varieties of products. The software will keep track of the
+items sold over the course of 50 days and show the impact of major
+events on how each item sells.
+
+Implementation:
+An std::map will hold different items, with the key being the name 
+of the item. The held values will be an array of data on the number of
+items sold per day, the day's current price, and the item's rating. Each day,
+a certain amount of items are sold, which is calculated based on the item's rating
+and price.
+
+Simulated Events:
+The simulation will include 4 categories of events that will cause a change in how
+many products are sold. This will include a new release of an item, a sale, 
+a price hike, and poor reviews of an item. Each of these events will have a 
+specific chance of occuring each day. Only one event will occur to an item each day.
+
+new release - 10%
+sale on an item - 7%
+price hike - 7%
+poor reviews - 10%
+
