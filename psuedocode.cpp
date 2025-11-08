@@ -40,11 +40,18 @@ void new_item(map<string, list<double>[AR_SIZE]>& store){
     list<double> (item_info)[AR_SIZE];
     // insert random double (1-10, round to 1 decimals) into ratings list (2)
     double r = (rand() % (RATING_MAX - RATING_MIN + 1) + RATING_MIN) / (double) 100;
-
+    double rat = round(r * 10.0)/10.0;
+    item_info[2].push_back(r);
     // insert random double (5-60, round to 2 decimals) into prices list (1)
+    r = (rand() % (PRICE_MAX - PRICE_MIN + 1) + PRICE_MIN) / (double) 100;
+    double pr = round(r * 10.0)/10.0;
+    item_info[1].push_back(r);
     // call function to calculate number of copies sold per day (0)
+    calc_daily_sold(item_info);
     // insert new pair into map (item name, array of lists)
+    store.insert(make_pair(name, item_info));
     // output "new item added: " name, price, rating
+    cout << "New item added to store: " << name << "[$" << pr << ", " << rat << "]" << endl;
 }
 
 // Define function to simulate an item going on sale
@@ -75,9 +82,14 @@ void new_item(map<string, list<double>[AR_SIZE]>& store){
     // output past rating -> current rating
 
 // Define function to calculate daily amount of items sold
-    // params: &array for item
+void calc_daily_sold(list<double> (&item)[AR_SIZE]){
     // copies sold today = (most recent rating)*(60 - most recent price)
+    double recent_rat = item[2].back();
+    double recent_pr = item[1].back();
+    int copies_sold = (recent_rat)*(PRICE_MAX - recent_pr);
     // insert value above into copies sold list
+    item[0].push_back(copies_sold);
+}   
 
 // Define main function
 int main(){
