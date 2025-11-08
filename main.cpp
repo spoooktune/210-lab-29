@@ -13,7 +13,7 @@ using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 const int P_CHANGE_MAX = 60, P_CHANGE_MIN = 10, R_CHANGE_MAX = 30, R_CHANGE_MIN = 5;
 const int NEW_ITEM = 10, SALE = 7, PRICE_HIKE = 7, RATING_DEC = 10;
-const int SW_TITLE = 40;
+const int SW_TITLE = 40, SW_SUBTITLE = 20;
 
 void new_item(map<string, array<list<double>, AR_SIZE>>& store);
 void sale(array<list<double>, AR_SIZE> &item);
@@ -130,11 +130,8 @@ void rating_decrease(array<list<double>, AR_SIZE> &item){
 void calc_daily_sold(array<list<double>, AR_SIZE> &item){
     // copies sold today = (most recent rating)*(60 - most recent price)
     double recent_rat = item[2].back();
-    cout << recent_rat << endl;
     double recent_pr = item[1].back();
-    cout << recent_pr << endl;
-    cout << (recent_rat)*(PRICE_MAX - recent_pr) << endl;
-    int copies_sold = (recent_rat)*(PRICE_MAX - recent_pr);
+    int copies_sold = (recent_rat)*((PRICE_MAX)/100.0 - recent_pr);
     // insert value above into copies sold list
     item[0].push_back(copies_sold);
 }
@@ -144,9 +141,10 @@ void print_summary(map<string, array<list<double>, AR_SIZE>>& store){
     for (const auto &pair : store){
         string name = pair.first;
         array<list<double>, AR_SIZE> item = pair.second;
+        int cp = item[0].back();
         double pr = item[1].back();
         double rat = item[2].back();
-        cout << "> " << name << " [$" << pr << ", " << rat << "]" << endl;
+        cout << "> " << name << " [" << cp << ", $" << pr << ", " << rat << "]" << endl;
     }
 }
 
@@ -220,12 +218,12 @@ int main(){
 
     // after whole simulation is completed, use for loop to display data 
     cout << "--Overall Summary--" << endl;
-    cout << left << setw(SW_TITLE) << "Release Data" << setw(SW_TITLE) << "Final Data" << endl;
+    cout << left << setw(SW_TITLE) << "Item" << setw(SW_TITLE) << "Release Data" << setw(SW_TITLE) << "Final Data" << endl;
     for (const auto &pair : store){
         // for each item - data upon release vs. final data
         array<list<double>, AR_SIZE> item = pair.second;
-        cout << pair.first << " - [" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "]"
-            <<  "[" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
+        cout << setw(SW_TITLE) << pair.first << "[" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "]"
+            << setw(SW_TITLE) << "[" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
     }
     
     return 0;
