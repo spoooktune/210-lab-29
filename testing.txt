@@ -1,0 +1,88 @@
+To unit test my program, I would alter my code in main. Specifically, 
+I would alter how many items are created on Day 1, as well as the
+chance for each event to occur. The variable r that controls the randomness
+of each event would stay at 100, and the condition for each to occur would also
+be at 100. I would then add 3 objects to the map and run the program. The 
+program already outputs a message whenever a change occurs, as well as a 
+summary after each day and after the simulation is over. Therefore, it is
+very easy to see whether the program has worked properly. 
+
+Testing Code:
+int main(){
+    srand(time(0));
+    // declare map <string, array of lists [3]>
+    map<string, array<list<double>, AR_SIZE>> store;
+    // Day 1 - run for loop 3 times to add items
+    cout << "Day 1 - Store Opens" << endl;
+    for (int i = 0; i < 3; i++){
+        new_item(store);
+    }
+    cout << endl;
+    // run for 3 days so each event is checked
+    for (int i = 2; i <= 4; i++){
+        bool event = false;
+        cout << "Day " << i << endl;
+        int r = 0;
+        // declare int r = 100 -> determines if event occurs
+        // for loop that iterates through each item in map
+        for (auto &pair : store){
+            // set r to random int (1-100)
+            // r = rand() % 100 + 1;
+            // if r meets condition for price hike
+            if (r == 100){
+                // call price hike func
+                cout << "Price for " << pair.first;
+                price_hike(pair.second);
+                event = true;
+                break;
+            }
+            // set r to random int (1-100)
+            // r = rand() % 100 + 1;
+            // if r meets condition for sale
+            if (r == 100)
+                // call sale func
+                cout << pair.first;
+                sale(pair.second);
+                event = true;
+                break;
+            }
+            // set r to random int (1-100)
+            // r = rand() % 100 + 1;
+            // if r meets condition for rating decrease
+            if (r == 100){
+                // call rating decrease func
+                cout << pair.first;
+                rating_decrease(pair.second);
+                event = true;
+                break;
+            }
+        // call func to calculate copies sold today
+        calc_daily_sold(pair.second);
+        // set r to random int (1-100)
+        // r = rand() % 100 + 1;
+        // if r meets condition for new release
+        if (r == 100){
+            // call new release func
+            new_item(store);
+            event = true;
+        }
+        if (!event){
+            cout << "No new updates" << endl;
+        }
+        print_summary(store);
+        cout << endl;
+    }
+
+    // after whole simulation is completed, use for loop to display data 
+    cout << "--Overall Summary--" << endl;
+    cout << left << setw(SW_TITLE) << "Item";
+    cout << setw(SW_TITLE) << "Release Data -> Final Data" << endl;
+    for (const auto &pair : store){
+        // for each item - data upon release vs. final data
+        array<list<double>, AR_SIZE> item = pair.second;
+        cout << left << setw(SW_TITLE) << pair.first;
+        cout << left << "[" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "] -> [" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
+    }
+    
+    return 0;
+}
