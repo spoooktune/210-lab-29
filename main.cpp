@@ -10,6 +10,7 @@
 
 using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
+const int P_CHANGE_MAX = 60, P_CHANGE_MIN = 10, R_CHANGE_MAX = 30, R_CHANGE_MIN = 5;
 
 void new_item(map<string, array<list<double>, AR_SIZE>>& store);
 void sale(array<list<double>, AR_SIZE> &item);
@@ -56,13 +57,21 @@ void new_item(map<string, array<list<double>, AR_SIZE>>& store){
 }
 
 // Define function to simulate an item going on sale
-    // params: &array for item
+void sale(array<list<double>, AR_SIZE> &item){
     // get sale % from random int (10-60)
+    int p_change = (rand() % (P_CHANGE_MAX - P_CHANGE_MIN + 1)) + P_CHANGE_MIN;
+    double old_price = item[1].back();
     // declare int = most recent price * sale %
+    double new_price = old_price - (item[1].back() * (p_change/100.0));
+    new_price = round(new_price * 100.0) / 100.0;
     // insert new price into prices list
+    item[1].push_back(new_price);
     // insert new value into ratings list = same as most recent rating
+    item[2].push_back(item[2].back());
     // output item "has gone on sale for " [sale %]
     // output past price -> current price
+    cout << " has gone on sale for " << p_change << "% [$" << old_price << " -> $" << new_price << "]" << endl;
+}
 
 // Define function to simulate an item going up in price
     // params: &array for item
@@ -102,8 +111,14 @@ int main(){
         new_item(store);
     }
     // Day 2 to 50 - for run for loop to simulate each day
+    for (int i = 2; i <= 2; i++){
+        int r = rand() % 100 + 1;
         // declare int r = 0 -> determines if event occurs
         // for loop that iterates through each item in map
+        for (auto &pair : store){
+            cout << pair.first;
+            sale(pair.second);
+        }
             // set r to random int (1-100)
             // if r meets condition for price hike
                 // call price hike func
@@ -119,7 +134,9 @@ int main(){
         // set r to random int (1-100)
         // if r meets condition for new release
             // call new release func
+    }
 
     // after whole simulation is completed, use for loop to display data 
-    // for each item - data upon release vs. final data 
+    // for each item - data upon release vs. final data
+    return 0;
 }
