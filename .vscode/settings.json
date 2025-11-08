@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "map": "cpp",
+        "list": "cpp",
+        "xiosbase": "cpp",
+        "xtree": "cpp",
+        "array": "cpp",
+        "iostream": "cpp",
+        "utility": "cpp",
+        "xstring": "cpp",
+        "iosfwd": "cpp",
+        "iomanip": "cpp",
+        "string": "cpp"
+    }
+}
