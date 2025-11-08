@@ -11,6 +11,7 @@
 using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 const int P_CHANGE_MAX = 60, P_CHANGE_MIN = 10, R_CHANGE_MAX = 30, R_CHANGE_MIN = 5;
+const int NEW_ITEM = 10, SALE = 7, PRICE_HIKE = 7, RATING_DEC = 10;
 
 void new_item(map<string, array<list<double>, AR_SIZE>>& store);
 void sale(array<list<double>, AR_SIZE> &item);
@@ -119,41 +120,66 @@ void calc_daily_sold(array<list<double>, AR_SIZE> &item){
 
 // Define main function
 int main(){
+    srand(time(0));
     // declare map <string, array of lists [3]>
     map<string, array<list<double>, AR_SIZE>> store;
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
-    for (int i = 0; i < 1; i++){
+    cout << "Day 1 - Store Opens" << endl;
+    for (int i = 0; i < 5; i++){
         new_item(store);
     }
+    cout << endl;
     // Day 2 to 50 - for run for loop to simulate each day
-    for (int i = 2; i <= 2; i++){
-        int r = rand() % 100 + 1;
+    for (int i = 2; i <= 5; i++){
+        bool event = false;
+        cout << "Day " << i << endl;
+        int r = 0;
         // declare int r = 0 -> determines if event occurs
         // for loop that iterates through each item in map
         for (auto &pair : store){
-            cout << pair.first;
-            sale(pair.second);
-            cout << "Price for " << pair.first;
-            price_hike(pair.second);
-            cout << pair.first;
-            rating_decrease(pair.second);
-        }
             // set r to random int (1-100)
+            r = rand() % 100 + 1;
             // if r meets condition for price hike
+            if (r == PRICE_HIKE){
                 // call price hike func
-
+                cout << "Price for " << pair.first;
+                price_hike(pair.second);
+                event = true;
+                break;
+            }
             // set r to random int (1-100)
+            r = rand() % 100 + 1;
             // if r meets condition for sale
+            if (r == SALE){
                 // call sale func
-            
+                cout << pair.first;
+                sale(pair.second);
+                event = true;
+                break;
+            }
             // set r to random int (1-100)
+            r = rand() % 100 + 1;
             // if r meets condition for rating decrease
+            if (r == RATING_DEC){
                 // call rating decrease func
+                cout << pair.first;
+                rating_decrease(pair.second);
+                event = true;
+                break;
+            }
         // call func to calculate copies sold today
+        calc_daily_sold(pair.second);
+        }
         // set r to random int (1-100)
+        r = rand() % 100 + 1;
         // if r meets condition for new release
+        if (r == NEW_ITEM){
             // call new release func
+            new_item(store);
+            event = true;
+        }
+        cout << endl;
     }
 
     // after whole simulation is completed, use for loop to display data 
