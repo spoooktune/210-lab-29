@@ -116,7 +116,18 @@ void calc_daily_sold(array<list<double>, AR_SIZE> &item){
     int copies_sold = (recent_rat)*(PRICE_MAX - recent_pr);
     // insert value above into copies sold list
     item[0].push_back(copies_sold);
-}   
+}
+
+void print_summary(map<string, array<list<double>, AR_SIZE>>& store){
+    cout << "Daily Summary" << endl;
+    for (const auto &pair : store){
+        string name = pair.first;
+        array<list<double>, AR_SIZE> item = pair.second;
+        double pr = item[1].back();
+        double rat = item[2].back();
+        cout << "> " << name << " [$" << pr << ", " << rat << "]" << endl;
+    }
+}
 
 // Define main function
 int main(){
@@ -179,6 +190,10 @@ int main(){
             new_item(store);
             event = true;
         }
+        if (!event){
+            cout << "No new updates" << endl;
+        }
+        print_summary(store);
         cout << endl;
     }
 
