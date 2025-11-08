@@ -74,22 +74,38 @@ void sale(array<list<double>, AR_SIZE> &item){
 }
 
 // Define function to simulate an item going up in price
-    // params: &array for item
+void price_hike(array<list<double>, AR_SIZE> &item){
     // get price increase % from random int (10-60)
+    int p_change = (rand() % (P_CHANGE_MAX - P_CHANGE_MIN + 1)) + P_CHANGE_MIN;
+    double old_price = item[1].back();
     // declare int = most recent price * price decrease %
+    double new_price = old_price + (item[1].back() * (p_change/100.0));
+    new_price = round(new_price * 100.0) / 100.0;
     // insert new price into prices list
+    item[1].push_back(new_price);
     // insert new value into ratings list = same as most recent rating
+    item[2].push_back(item[2].back());
     // output "price for " item " has increased by " [increase %]
     // output past price -> current price
+    cout << " has increased by " << p_change << "% [$" << old_price << " -> $" << new_price << "]" << endl;
+}
 
 // Define function to simulate rating decrease
-    // params: &array for item
+void rating_decrease(array<list<double>, AR_SIZE> &item){
     // get rating decrease % from random int (5-30)
+    int r_change = (rand() % (R_CHANGE_MAX - R_CHANGE_MIN + 1)) + R_CHANGE_MIN;
+    double old_rating = item[2].back();
     // declare int = most recent rating * rating decrease %
+    double new_rating = old_rating - (item[2].back() * (r_change/100.0));
+    new_rating = round(new_rating * 10.0) / 10.0;
     // insert new price into ratings list
+    item[2].push_back(new_rating);
     // insert new value into prices list = same as most recent price
+    item[1].push_back(item[1].back());
     // output item "'s rating has decreased"
     // output past rating -> current rating
+    cout << "'s rating has decreased by " << r_change << "% [" << old_rating << " -> " << new_rating <<"]" << endl;
+}
 
 // Define function to calculate daily amount of items sold
 void calc_daily_sold(array<list<double>, AR_SIZE> &item){
@@ -107,7 +123,7 @@ int main(){
     map<string, array<list<double>, AR_SIZE>> store;
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 1; i++){
         new_item(store);
     }
     // Day 2 to 50 - for run for loop to simulate each day
@@ -118,6 +134,10 @@ int main(){
         for (auto &pair : store){
             cout << pair.first;
             sale(pair.second);
+            cout << "Price for " << pair.first;
+            price_hike(pair.second);
+            cout << pair.first;
+            rating_decrease(pair.second);
         }
             // set r to random int (1-100)
             // if r meets condition for price hike

@@ -4,6 +4,7 @@
         "list": "cpp",
         "xiosbase": "cpp",
         "xtree": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "iostream": "cpp"
     }
 }
