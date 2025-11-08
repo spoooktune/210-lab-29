@@ -5,9 +5,10 @@
 #include <map>
 #include <fstream>
 #include <random>
+#include <cmath>
 
 using namespace std;
-const int AR_SIZE = 3;
+const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 
 void new_item(map<string, list<double>[AR_SIZE]>& store);
 void sale(list<double> (&item)[AR_SIZE]);
@@ -16,14 +17,35 @@ void rating_decrease(list<double> (&item)[AR_SIZE]);
 void calc_daily_sold(list<double> (&item)[AR_SIZE]);
 
 // Define function to simulate new items added
-    // params: &map of store
+void new_item(map<string, list<double>[AR_SIZE]>& store){
     // get random item name from external file
+    ifstream item_list;
+    item_list.open("items.txt");
+    if (!item_list.good()){
+        cout << "Unable to open file" << endl;
+    }
+    int r = rand() % 59;
+    int currentLine = 0;
+    string name = "";
+    while(!item_list.eof()){
+        currentLine++;
+        getline(item_list, name);
+        if (currentLine == r){
+            break;
+        }
+    }
+    item_list.close();
+    
     // declare and initialize array of lists
-    // insert random double (1-10, round to 1 decimals) into ratings list
-    // insert random double (5-60, round to 2 decimals) into prices list
-    // call function to calculate number of copies sold per day
+    list<double> (item_info)[AR_SIZE];
+    // insert random double (1-10, round to 1 decimals) into ratings list (2)
+    double r = (rand() % (RATING_MAX - RATING_MIN + 1) + RATING_MIN) / (double) 100;
+
+    // insert random double (5-60, round to 2 decimals) into prices list (1)
+    // call function to calculate number of copies sold per day (0)
     // insert new pair into map (item name, array of lists)
     // output "new item added: " name, price, rating
+}
 
 // Define function to simulate an item going on sale
     // params: &array for item
