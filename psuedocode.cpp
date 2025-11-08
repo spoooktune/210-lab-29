@@ -1,4 +1,20 @@
 // include headers (list, string, map, fstream, iostream, etc.)
+#include <iostream>
+#include <list>
+#include <string>
+#include <map>
+#include <fstream>
+#include <random>
+
+using namespace std;
+const int AR_SIZE = 3;
+
+void new_item(map<string, list<double>[AR_SIZE]>& store);
+void sale(list<double> (&item)[AR_SIZE]);
+void price_hike(list<double> (&item)[AR_SIZE]);
+void rating_decrease(list<double> (&item)[AR_SIZE]);
+void calc_daily_sold(list<double> (&item)[AR_SIZE]);
+
 // Define function to simulate new items added
     // params: &map of store
     // get random item name from external file
@@ -42,6 +58,9 @@
     // insert value above into copies sold list
 
 // Define main function
+int main(){
+
+}
     // declare map <string, array of lists [3]>
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
