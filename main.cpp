@@ -23,21 +23,37 @@ void calc_daily_sold(array<list<double>, AR_SIZE> &item);
 void new_item(map<string, array<list<double>, AR_SIZE>>& store){
     // get random item name from external file
     ifstream item_list;
-    item_list.open("items.txt");
-    if (!item_list.good()){
-        cout << "Unable to open file" << endl;
-    }
-    int r1 = rand() % 59;
-    int currentLine = 0;
+    bool need_new_item = true;
     string name = "";
-    while(!item_list.eof()){
-        currentLine++;
-        getline(item_list, name);
-        if (currentLine == r1){
+    while(need_new_item){
+        item_list.open("items.txt");
+        if (!item_list.good()){
+            cout << "Unable to open file" << endl;
+        }
+        int r1 = rand() % 59;
+        int currentLine = 0;
+        while(!item_list.eof()){
+            currentLine++;
+            getline(item_list, name);
+            if (currentLine == r1){
+                break;
+            }
+        }
+        item_list.close();
+        if (store.empty()){
             break;
         }
+        else{
+            for (const auto &pair : store){
+                if (name == pair.first){
+                    break;
+                }
+                else{
+                    need_new_item = false;
+                }
+            }
+        }
     }
-    item_list.close();
     
     // declare and initialize array of lists
     array<list<double>, AR_SIZE> item_info;
