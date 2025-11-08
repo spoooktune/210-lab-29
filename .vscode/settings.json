@@ -9,6 +9,7 @@
         "utility": "cpp",
         "xstring": "cpp",
         "iosfwd": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "string": "cpp"
     }
 }

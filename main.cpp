@@ -156,12 +156,12 @@ int main(){
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
     cout << "Day 1 - Store Opens" << endl;
-    for (int i = 0; i < 1; i++){
+    for (int i = 0; i < 5; i++){
         new_item(store);
     }
     cout << endl;
     // Day 2 to 50 - for run for loop to simulate each day
-    for (int i = 2; i <= 5; i++){
+    for (int i = 2; i <= 50; i++){
         bool event = false;
         cout << "Day " << i << endl;
         int r = 0;
@@ -219,14 +219,12 @@ int main(){
     // after whole simulation is completed, use for loop to display data 
     cout << "--Overall Summary--" << endl;
     cout << left << setw(SW_TITLE) << "Item";
-    cout << setw(SW_TITLE) << "Release Data";
-    cout << setw(SW_TITLE) << "Final Data" << endl;
+    cout << setw(SW_TITLE) << "Release Data -> Final Data" << endl;
     for (const auto &pair : store){
         // for each item - data upon release vs. final data
         array<list<double>, AR_SIZE> item = pair.second;
         cout << left << setw(SW_TITLE) << pair.first;
-        cout << left << setw(SW_TITLE) << setw(0) << "[" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "]";
-        cout << left << setw(SW_TITLE) << "[" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
+        cout << left << "[" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "] -> [" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
     }
     
     return 0;
