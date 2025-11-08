@@ -2,6 +2,8 @@
     "files.associations": {
         "map": "cpp",
         "list": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "xtree": "cpp",
+        "array": "cpp"
     }
 }

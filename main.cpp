@@ -2,6 +2,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <array>
 #include <map>
 #include <fstream>
 #include <random>
@@ -10,48 +11,48 @@
 using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 
-void new_item(map<string, list<double>[AR_SIZE]>& store);
-void sale(list<double> (&item)[AR_SIZE]);
-void price_hike(list<double> (&item)[AR_SIZE]);
-void rating_decrease(list<double> (&item)[AR_SIZE]);
-void calc_daily_sold(list<double> (&item)[AR_SIZE]);
+void new_item(map<string, array<list<double>, AR_SIZE>>& store);
+void sale(array<list<double>, AR_SIZE> &item);
+void price_hike(array<list<double>, AR_SIZE> &item);
+void rating_decrease(array<list<double>, AR_SIZE> &item);
+void calc_daily_sold(array<list<double>, AR_SIZE> &item);
 
 // Define function to simulate new items added
-void new_item(map<string, list<double>[AR_SIZE]>& store){
+void new_item(map<string, array<list<double>, AR_SIZE>>& store){
     // get random item name from external file
     ifstream item_list;
     item_list.open("items.txt");
     if (!item_list.good()){
         cout << "Unable to open file" << endl;
     }
-    int r = rand() % 59;
+    int r1 = rand() % 59;
     int currentLine = 0;
     string name = "";
     while(!item_list.eof()){
         currentLine++;
         getline(item_list, name);
-        if (currentLine == r){
+        if (currentLine == r1){
             break;
         }
     }
     item_list.close();
     
     // declare and initialize array of lists
-    list<double> (item_info)[AR_SIZE];
+    array<list<double>, AR_SIZE> item_info;
     // insert random double (1-10, round to 1 decimals) into ratings list (2)
-    double r = (rand() % (RATING_MAX - RATING_MIN + 1) + RATING_MIN) / (double) 100;
-    double rat = round(r * 10.0)/10.0;
-    item_info[2].push_back(r);
+    double r2 = (rand() % (RATING_MAX - RATING_MIN + 1) + RATING_MIN) / (double) 100;
+    double rat = round(r2 * 10.0)/10.0;
+    item_info[2].push_back(rat);
     // insert random double (5-60, round to 2 decimals) into prices list (1)
-    r = (rand() % (PRICE_MAX - PRICE_MIN + 1) + PRICE_MIN) / (double) 100;
-    double pr = round(r * 10.0)/10.0;
-    item_info[1].push_back(r);
+    r2 = (rand() % (PRICE_MAX - PRICE_MIN + 1) + PRICE_MIN) / (double) 100;
+    double pr = round(r2 * 100.0)/100.0;
+    item_info[1].push_back(pr);
     // call function to calculate number of copies sold per day (0)
     calc_daily_sold(item_info);
     // insert new pair into map (item name, array of lists)
     store.insert(make_pair(name, item_info));
     // output "new item added: " name, price, rating
-    cout << "New item added to store: " << name << "[$" << pr << ", " << rat << "]" << endl;
+    cout << "New item added to store: " << name << " [$" << pr << ", " << rat << "]" << endl;
 }
 
 // Define function to simulate an item going on sale
@@ -82,7 +83,7 @@ void new_item(map<string, list<double>[AR_SIZE]>& store){
     // output past rating -> current rating
 
 // Define function to calculate daily amount of items sold
-void calc_daily_sold(list<double> (&item)[AR_SIZE]){
+void calc_daily_sold(array<list<double>, AR_SIZE> &item){
     // copies sold today = (most recent rating)*(60 - most recent price)
     double recent_rat = item[2].back();
     double recent_pr = item[1].back();
@@ -93,11 +94,13 @@ void calc_daily_sold(list<double> (&item)[AR_SIZE]){
 
 // Define main function
 int main(){
-
-}
     // declare map <string, array of lists [3]>
+    map<string, array<list<double>, AR_SIZE>> store;
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
+    for (int i = 0; i < 5; i++){
+        new_item(store);
+    }
     // Day 2 to 50 - for run for loop to simulate each day
         // declare int r = 0 -> determines if event occurs
         // for loop that iterates through each item in map
@@ -119,3 +122,4 @@ int main(){
 
     // after whole simulation is completed, use for loop to display data 
     // for each item - data upon release vs. final data 
+}
