@@ -1,0 +1,14 @@
+Bugs from alpha and beta
+alpha
+- inserting a new pair into the store map resulted in an error (line 73), 
+  fixed by wrapping the array using std::array, did not effect any of the 
+  other code in the function
+- new_price variable in sale and price_hike functions displayed values 
+  higher/lower than expected (lines 84 and 101), caused because p_change
+  variable was in percentage form and not decimal, fixed by dividing p_change
+  by 100.0
+- new_item function could add an item with the same name and overwrite the
+  previous data for the item, fixed by adding code to check if name variable
+  is the same as any key values in store map. if there is any match, the code
+  to get a random name reruns until a new item name is picked. 
+- 
