@@ -12,14 +12,15 @@
 using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 const int P_CHANGE_MAX = 60, P_CHANGE_MIN = 10, R_CHANGE_MAX = 30, R_CHANGE_MIN = 5;
-const int NEW_ITEM = 10, SALE = 7, PRICE_HIKE = 7, RATING_DEC = 10;
-const int SW_TITLE = 40;
+const int NEW_ITEM = 30, SALE = 30, PRICE_HIKE = 15, RATING_DEC = 7;
+const int SW_TITLE = 47;
 
 void new_item(map<string, array<list<double>, AR_SIZE>>& store);
 void sale(array<list<double>, AR_SIZE> &item);
 void price_hike(array<list<double>, AR_SIZE> &item);
 void rating_decrease(array<list<double>, AR_SIZE> &item);
 void calc_daily_sold(array<list<double>, AR_SIZE> &item);
+void print_summary(map<string, array<list<double>, AR_SIZE>>& store);
 
 // Define function to simulate new items added
 void new_item(map<string, array<list<double>, AR_SIZE>>& store){
@@ -132,6 +133,9 @@ void calc_daily_sold(array<list<double>, AR_SIZE> &item){
     double recent_rat = item[2].back();
     double recent_pr = item[1].back();
     int copies_sold = (recent_rat)*((PRICE_MAX)/100.0 - recent_pr);
+    if (copies_sold < 0){
+        copies_sold = 0;
+    }
     // insert value above into copies sold list
     item[0].push_back(copies_sold);
 }
@@ -144,7 +148,7 @@ void print_summary(map<string, array<list<double>, AR_SIZE>>& store){
         int cp = item[0].back();
         double pr = item[1].back();
         double rat = item[2].back();
-        cout << "> " << name << " [" << cp << ", $" << pr << ", " << rat << "]" << endl;
+        cout << "> " << name << " [" << cp << ", $" << fixed << setprecision(2) << pr << ", " << setprecision(1) << rat << "]" << endl;
     }
 }
 
@@ -156,9 +160,10 @@ int main(){
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
     cout << "Day 1 - Store Opens" << endl;
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 10; i++){
         new_item(store);
     }
+    print_summary(store);
     cout << endl;
     // Day 2 to 50 - for run for loop to simulate each day
     for (int i = 2; i <= 50; i++){
@@ -171,32 +176,29 @@ int main(){
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for price hike
-            if (r == PRICE_HIKE){
+            if (r == PRICE_HIKE && !event){
                 // call price hike func
                 cout << "Price for " << pair.first;
                 price_hike(pair.second);
                 event = true;
-                break;
             }
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for sale
-            if (r == SALE){
+            if (r == SALE && !event){
                 // call sale func
                 cout << pair.first;
                 sale(pair.second);
                 event = true;
-                break;
             }
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for rating decrease
-            if (r == RATING_DEC){
+            if (r == RATING_DEC && !event){
                 // call rating decrease func
                 cout << pair.first;
                 rating_decrease(pair.second);
                 event = true;
-                break;
             }
         // call func to calculate copies sold today
         calc_daily_sold(pair.second);
@@ -224,7 +226,13 @@ int main(){
         // for each item - data upon release vs. final data
         array<list<double>, AR_SIZE> item = pair.second;
         cout << left << setw(SW_TITLE) << pair.first;
-        cout << left << "[" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "] -> [" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
+        cout << left 
+            << "[" << setprecision(0) << item[0].front() 
+            << ", $" << setprecision(2) << item[1].front() 
+            << ", " << setprecision(1) << item[2].front() 
+            << "] -> [" << setprecision(0) << item[0].back() 
+            << ", $" << setprecision(2) << item[1].back() 
+            << ", " << setprecision(1) << item[2].back() << "]" << endl;
     }
     
     return 0;

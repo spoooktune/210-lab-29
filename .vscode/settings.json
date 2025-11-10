@@ -10,6 +10,9 @@
         "xstring": "cpp",
         "iosfwd": "cpp",
         "iomanip": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "atomic": "cpp",
+        "memory": "cpp",
+        "ios": "cpp"
     }
 }
