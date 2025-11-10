@@ -12,7 +12,7 @@
 using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 const int P_CHANGE_MAX = 60, P_CHANGE_MIN = 10, R_CHANGE_MAX = 30, R_CHANGE_MIN = 5;
-const int NEW_ITEM = 10, SALE = 7, PRICE_HIKE = 7, RATING_DEC = 10;
+const int NEW_ITEM = 30, SALE = 30, PRICE_HIKE = 15, RATING_DEC = 7;
 const int SW_TITLE = 40;
 
 void new_item(map<string, array<list<double>, AR_SIZE>>& store);

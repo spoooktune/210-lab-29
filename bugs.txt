@@ -1,14 +1,24 @@
 Bugs from alpha and beta
 alpha
-- inserting a new pair into the store map resulted in an error (line 73), 
-  fixed by wrapping the array using std::array, did not effect any of the 
-  other code in the function
+- inserting a new pair into the store map in new_item function 
+  resulted in an error, fixed by wrapping the array using std::array, did 
+  not effect any of the other code in the function
 - new_price variable in sale and price_hike functions displayed values 
-  higher/lower than expected (lines 84 and 101), caused because p_change
-  variable was in percentage form and not decimal, fixed by dividing p_change
-  by 100.0
+  higher/lower than expected, caused because p_change variable was in 
+  percentage form and not decimal, fixed by dividing p_change by 100.0
 - new_item function could add an item with the same name and overwrite the
   previous data for the item, fixed by adding code to check if name variable
   is the same as any key values in store map. if there is any match, the code
   to get a random name reruns until a new item name is picked. 
-- 
+- code for displaying final summary was formatted incorrectly, final item data
+  was printed incorrectly, fixed by changing the way all data was outputted
+
+beta
+- chance for events to randomly occur was too low, very little events occuring and 
+  therefore inaccurate, changed value of const int variables to be more accurate
+  NEW_ITEM: 10 -> 30
+  SALE: 7 -> 30
+  PRICE_HIKE: 7 -> 15
+  RATING_DEC: 10 -> 7
+- after sale, price_hike, or rating_decrease event occurs, the copies sold outputted in 
+  the daily summary does not change until the next day, when it should change the same day.
