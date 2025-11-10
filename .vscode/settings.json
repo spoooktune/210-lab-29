@@ -12,6 +12,7 @@
         "iomanip": "cpp",
         "string": "cpp",
         "atomic": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "ios": "cpp"
     }
 }

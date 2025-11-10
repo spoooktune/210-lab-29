@@ -13,7 +13,7 @@ using namespace std;
 const int AR_SIZE = 3, RATING_MAX = 1000, RATING_MIN = 100, PRICE_MAX = 6000, PRICE_MIN = 500;
 const int P_CHANGE_MAX = 60, P_CHANGE_MIN = 10, R_CHANGE_MAX = 30, R_CHANGE_MIN = 5;
 const int NEW_ITEM = 30, SALE = 30, PRICE_HIKE = 15, RATING_DEC = 7;
-const int SW_TITLE = 40;
+const int SW_TITLE = 47;
 
 void new_item(map<string, array<list<double>, AR_SIZE>>& store);
 void sale(array<list<double>, AR_SIZE> &item);
@@ -133,6 +133,9 @@ void calc_daily_sold(array<list<double>, AR_SIZE> &item){
     double recent_rat = item[2].back();
     double recent_pr = item[1].back();
     int copies_sold = (recent_rat)*((PRICE_MAX)/100.0 - recent_pr);
+    if (copies_sold < 0){
+        copies_sold = 0;
+    }
     // insert value above into copies sold list
     item[0].push_back(copies_sold);
 }
@@ -145,7 +148,7 @@ void print_summary(map<string, array<list<double>, AR_SIZE>>& store){
         int cp = item[0].back();
         double pr = item[1].back();
         double rat = item[2].back();
-        cout << "> " << name << " [" << cp << ", $" << pr << ", " << rat << "]" << endl;
+        cout << "> " << name << " [" << cp << ", $" << fixed << setprecision(2) << pr << ", " << setprecision(1) << rat << "]" << endl;
     }
 }
 
@@ -157,7 +160,7 @@ int main(){
     // Day 1 - run for loop 5 times to add items to store
         // call func to add new items
     cout << "Day 1 - Store Opens" << endl;
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 10; i++){
         new_item(store);
     }
     print_summary(store);
@@ -223,7 +226,13 @@ int main(){
         // for each item - data upon release vs. final data
         array<list<double>, AR_SIZE> item = pair.second;
         cout << left << setw(SW_TITLE) << pair.first;
-        cout << left << "[" << item[0].front() << ", $" << item[1].front() << ", " << item[2].front() << "] -> [" << item[0].back() << ", $" << item[1].back() << ", " << item[2].back() << "]" << endl;
+        cout << left 
+            << "[" << setprecision(0) << item[0].front() 
+            << ", $" << setprecision(2) << item[1].front() 
+            << ", " << setprecision(1) << item[2].front() 
+            << "] -> [" << setprecision(0) << item[0].back() 
+            << ", $" << setprecision(2) << item[1].back() 
+            << ", " << setprecision(1) << item[2].back() << "]" << endl;
     }
     
     return 0;

@@ -29,4 +29,10 @@ beta
   caused because of break statements that ran after an event occured. fixed by altering if 
   statments that handled if an event occured - checks if event == false and if event can occur
   before running the code
-- copies_sold sometimes goes below 0, which is should not be possible
+- in the calc_daily_sold function, copies_sold sometimes goes below 0, which is not possible in
+  an actual store. fixed by setting copies_sold to 0 if it is negative after initial calculation
+- in print_summary function and for the final summary, price is not always displayed with 2 decimal 
+  points, fixed by adding fixed << setprecision(2) when displaying price, setprecision(1) when
+  displaying ratings, and setprecision(0) when displaying copies sold
+- in final summary, some item names clashed with the data when displayed. fixed by increasing SW_TITLE
+  from 40 to 47
