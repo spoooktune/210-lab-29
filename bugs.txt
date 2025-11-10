@@ -20,5 +20,13 @@ beta
   SALE: 7 -> 30
   PRICE_HIKE: 7 -> 15
   RATING_DEC: 10 -> 7
+- daily summary for day 1 of simulation was not printed, fixed by calling print_summary
+  function after 5 initial items were added
+- number of items added initially were too low, fixed by changing the amount of times 
+  the day 1 for loop occured from 5 to 10 times. 
 - after sale, price_hike, or rating_decrease event occurs, the copies sold outputted in 
   the daily summary does not change until the next day, when it should change the same day.
+  caused because of break statements that ran after an event occured. fixed by altering if 
+  statments that handled if an event occured - checks if event == false and if event can occur
+  before running the code
+- copies_sold sometimes goes below 0, which is should not be possible

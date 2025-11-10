@@ -20,6 +20,7 @@ void sale(array<list<double>, AR_SIZE> &item);
 void price_hike(array<list<double>, AR_SIZE> &item);
 void rating_decrease(array<list<double>, AR_SIZE> &item);
 void calc_daily_sold(array<list<double>, AR_SIZE> &item);
+void print_summary(map<string, array<list<double>, AR_SIZE>>& store);
 
 // Define function to simulate new items added
 void new_item(map<string, array<list<double>, AR_SIZE>>& store){
@@ -159,6 +160,7 @@ int main(){
     for (int i = 0; i < 5; i++){
         new_item(store);
     }
+    print_summary(store);
     cout << endl;
     // Day 2 to 50 - for run for loop to simulate each day
     for (int i = 2; i <= 50; i++){
@@ -171,32 +173,29 @@ int main(){
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for price hike
-            if (r == PRICE_HIKE){
+            if (r == PRICE_HIKE && !event){
                 // call price hike func
                 cout << "Price for " << pair.first;
                 price_hike(pair.second);
                 event = true;
-                break;
             }
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for sale
-            if (r == SALE){
+            if (r == SALE && !event){
                 // call sale func
                 cout << pair.first;
                 sale(pair.second);
                 event = true;
-                break;
             }
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for rating decrease
-            if (r == RATING_DEC){
+            if (r == RATING_DEC && !event){
                 // call rating decrease func
                 cout << pair.first;
                 rating_decrease(pair.second);
                 event = true;
-                break;
             }
         // call func to calculate copies sold today
         calc_daily_sold(pair.second);
