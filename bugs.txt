@@ -36,3 +36,11 @@ beta
   displaying ratings, and setprecision(0) when displaying copies sold
 - in final summary, some item names clashed with the data when displayed. fixed by increasing SW_TITLE
   from 40 to 47
+
+post-beta
+- chances for event to occur were not accurately reflected in code (checked for r == event instead of
+  r <= event), fixed by changing all == to <= in the for loop for each day
+- only one event max per day occuring rather than one event max per item, fixed by settings bool event
+  to false before iterating through each item every day
+- code was outputting "no new updates" even though updates had occured, fixed by adding int var numEvents
+  to keep track of how many events occur daily, no new updates will output if numEvents <= 0
