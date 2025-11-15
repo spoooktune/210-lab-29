@@ -1,0 +1,46 @@
+Bugs from alpha and beta
+alpha
+- inserting a new pair into the store map in new_item function 
+  resulted in an error, fixed by wrapping the array using std::array, did 
+  not effect any of the other code in the function
+- new_price variable in sale and price_hike functions displayed values 
+  higher/lower than expected, caused because p_change variable was in 
+  percentage form and not decimal, fixed by dividing p_change by 100.0
+- new_item function could add an item with the same name and overwrite the
+  previous data for the item, fixed by adding code to check if name variable
+  is the same as any key values in store map. if there is any match, the code
+  to get a random name reruns until a new item name is picked. 
+- code for displaying final summary was formatted incorrectly, final item data
+  was printed incorrectly, fixed by changing the way all data was outputted
+
+beta
+- chance for events to randomly occur was too low, very little events occuring and 
+  therefore inaccurate, changed value of const int variables to be more accurate
+  NEW_ITEM: 10 -> 30
+  SALE: 7 -> 30
+  PRICE_HIKE: 7 -> 15
+  RATING_DEC: 10 -> 7
+- daily summary for day 1 of simulation was not printed, fixed by calling print_summary
+  function after 5 initial items were added
+- number of items added initially were too low, fixed by changing the amount of times 
+  the day 1 for loop occured from 5 to 10 times. 
+- after sale, price_hike, or rating_decrease event occurs, the copies sold outputted in 
+  the daily summary does not change until the next day, when it should change the same day.
+  caused because of break statements that ran after an event occured. fixed by altering if 
+  statments that handled if an event occured - checks if event == false and if event can occur
+  before running the code
+- in the calc_daily_sold function, copies_sold sometimes goes below 0, which is not possible in
+  an actual store. fixed by setting copies_sold to 0 if it is negative after initial calculation
+- in print_summary function and for the final summary, price is not always displayed with 2 decimal 
+  points, fixed by adding fixed << setprecision(2) when displaying price, setprecision(1) when
+  displaying ratings, and setprecision(0) when displaying copies sold
+- in final summary, some item names clashed with the data when displayed. fixed by increasing SW_TITLE
+  from 40 to 47
+
+post-beta
+- chances for event to occur were not accurately reflected in code (checked for r == event instead of
+  r <= event), fixed by changing all == to <= in the for loop for each day
+- only one event max per day occuring rather than one event max per item, fixed by settings bool event
+  to false before iterating through each item every day
+- code was outputting "no new updates" even though updates had occured, fixed by adding int var numEvents
+  to keep track of how many events occur daily, no new updates will output if numEvents <= 0
