@@ -168,37 +168,42 @@ int main(){
     // Day 2 to 50 - for run for loop to simulate each day
     for (int i = 2; i <= 50; i++){
         bool event = false;
+        int numEvents = 0;
         cout << "Day " << i << endl;
         int r = 0;
         // declare int r = 0 -> determines if event occurs
         // for loop that iterates through each item in map
         for (auto &pair : store){
+            event = false;
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for price hike
-            if (r == PRICE_HIKE && !event){
+            if (r <= PRICE_HIKE && !event){
                 // call price hike func
                 cout << "Price for " << pair.first;
                 price_hike(pair.second);
                 event = true;
+                numEvents++;
             }
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for sale
-            if (r == SALE && !event){
+            if (r <= SALE && !event){
                 // call sale func
                 cout << pair.first;
                 sale(pair.second);
                 event = true;
+                numEvents++;
             }
             // set r to random int (1-100)
             r = rand() % 100 + 1;
             // if r meets condition for rating decrease
-            if (r == RATING_DEC && !event){
+            if (r <= RATING_DEC && !event){
                 // call rating decrease func
                 cout << pair.first;
                 rating_decrease(pair.second);
                 event = true;
+                numEvents++;
             }
         // call func to calculate copies sold today
         calc_daily_sold(pair.second);
@@ -206,14 +211,16 @@ int main(){
         // set r to random int (1-100)
         r = rand() % 100 + 1;
         // if r meets condition for new release
-        if (r == NEW_ITEM){
+        if (r <= NEW_ITEM){
             // call new release func
             new_item(store);
             event = true;
+            numEvents++;
         }
-        if (!event){
+        if (numEvents <= 0){
             cout << "No new updates" << endl;
         }
+        cout << endl;
         print_summary(store);
         cout << endl;
     }
